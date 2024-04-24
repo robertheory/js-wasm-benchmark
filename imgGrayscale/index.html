@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Grayscale JS - WASM Benchmark</title>
+
+    <script src="./wasm-grayscale.js"></script>
+    <script src="./wasm-grayscale.wasm"></script>
+    <script src="./wasmInit.js"></script>
+    <script src="./js-grayscale.js"></script>
+    <script src="./testcode.js"></script>
+  </head>
+  <body>
+    <a href="../index.html"> Back </a>
+    <h1>Grayscale JS - WASM Benchmark</h1>
+
+    <table border="2">
+      <thead>
+        <tr>
+          <th>Function</th>
+          <th>Time (ms)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr align="center">
+          <td>JS</td>
+          <td id="js-time">0</td>
+        </tr>
+        <tr align="center">
+          <td>WASM</td>
+          <td id="wasm-time">0</td>
+        </tr>
+        <tr align="center">
+          <td>Comparison</td>
+          <td id="comparison">0</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <img src="./duck.jpg" alt="a great duck" id="duck" />
+
+    <canvas id="js_canvas" width="640" height="400"></canvas>
+
+    <canvas id="ws_canvas" width="640" height="400"></canvas>
+  </body>
+</html>
