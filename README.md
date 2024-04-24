@@ -2,6 +2,10 @@
 
 This is a simple benchmark to compare the performance of JavaScript and WebAssembly.
 
+## Live demo
+
+You can access the live demo [here](https://robertheory.github.io/js-wasm-benchmarks/).
+
 ## How to run
 
 1. Clone the repository
