@@ -5,11 +5,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Grayscale JS - WASM Benchmark</title>
 
+    <!-- <script src="./wasm-grayscale.wasm"></script> -->
     <script src="./wasm-grayscale.js"></script>
-    <script src="./wasm-grayscale.wasm"></script>
-    <script src="./wasmInit.js"></script>
-    <script src="./js-grayscale.js"></script>
     <script src="./testcode.js"></script>
+
+    <style>
+      .container {
+        width: 100vw;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        gap: 20px;
+        align-items: flex-start;
+      }
+    </style>
   </head>
   <body>
     <a href="../index.html"> Back </a>
@@ -38,10 +47,21 @@
       </tbody>
     </table>
 
+    <button onclick="runTests()" disabled id="runButton">Run Tests</button>
+
+    <div class="container" style="display: none" id="results">
+      <div>
+        <h3>JS Grayscale</h3>
+        <canvas id="js_canvas" width="640" height="400"></canvas>
+      </div>
+
+      <div>
+        <h3>WASM Grayscale</h3>
+        <canvas id="ws_canvas" width="640" height="400"></canvas>
+      </div>
+    </div>
+
+    <h3>Original</h3>
     <img src="./duck.jpg" alt="a great duck" id="duck" />
-
-    <canvas id="js_canvas" width="640" height="400"></canvas>
-
-    <canvas id="ws_canvas" width="640" height="400"></canvas>
   </body>
 </html>
