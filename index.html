@@ -4,14 +4,111 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>JS - WASM Benchmark</title>
+
+    <script src="./wasm-fibonacci.js"></script>
+
+    <script>
+      let fibNumber = 0;
+      let loop = 0;
+
+      function jsFibonacci(n) {
+        if (n === 1) return 1;
+        if (n === 2) return 1;
+        return jsFibonacci(n - 1) + jsFibonacci(n - 2);
+      }
+
+      window.onload = function () {
+        console.log("Loading wasm module");
+
+        Module.onRuntimeInitialized = async () => {
+          // Import the function from the wasm module
+          // make it available in the global scope
+
+          window.wasmFibonacci = Module.cwrap("wasmFibonacci", "number", [
+            "number",
+          ]);
+
+          console.debug("Wasm module is ready");
+        };
+      };
+
+      function runBenchmark(fibFunction, number, loop) {
+        console.log("Running benchmark...");
+        fibFunction(number); // warm-up
+        const startTime = performance.now();
+        for (const i = 0; i < loop; i++) {
+          fibFunction(number);
+        }
+        const endTime = performance.now();
+        return ((endTime - startTime) / loop).toFixed(4);
+      }
+
+      function runBenchmarks() {
+        const num = 0x28;
+        const loop = 10;
+
+        document.getElementById("runButton").disabled = true;
+
+        document.getElementById("message").innerText = "Running...";
+
+        setTimeout(() => {
+          const jsTime = runBenchmark(jsFibonacci, num, loop);
+          document.getElementById("js-time").innerText = jsTime;
+
+          const wasmTime = runBenchmark(wasmFibonacci, num, loop);
+          document.getElementById("wasm-time").innerText = wasmTime;
+
+          const comparison = (jsTime / wasmTime).toFixed(4);
+          document.getElementById("comparison").innerText = comparison;
+
+          document.getElementById("runButton").disabled = false;
+
+          document.getElementById("message").innerText =
+            "Done! Click the button to run the benchmark again.";
+        }, 500);
+      }
+    </script>
+    <style>
+      button {
+        padding: 8px;
+        font-size: 16px;
+        margin: 10px;
+      }
+    </style>
   </head>
   <body>
     <h1>JS - WASM Benchmark</h1>
 
-    <ul>
-      <li>
-        <a href="./fibonacci/index.html"> Fibonacci </a>
-      </li>
-    </ul>
+    <p>
+      This is a simple benchmark to compare the performance of a Fibonacci
+      function implemented in JavaScript and WebAssembly ( C ).
+    </p>
+
+    <button id="runButton" onclick="runBenchmarks()">Run Benchmark</button>
+
+    <p id="message">Click the button to run the benchmark</p>
+
+    <table border="2">
+      <thead>
+        <tr>
+          <th>Function</th>
+          <th>Time (ms)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr align="center">
+          <td>JS</td>
+          <td id="js-time">0</td>
+        </tr>
+        <tr align="center">
+          <td>WASM</td>
+          <td id="wasm-time">0</td>
+        </tr>
+        <tr align="center">
+          <td>Comparison</td>
+          <td id="comparison">0</td>
+        </tr>
+      </tbody>
+    </table>
   </body>
 </html>
