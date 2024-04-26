@@ -8,9 +8,6 @@
     <script src="./wasm-fibonacci.js"></script>
 
     <script>
-      let fibNumber = 0;
-      let loop = 0;
-
       function jsFibonacci(n) {
         if (n === 1) return 1;
         if (n === 2) return 1;
@@ -36,7 +33,7 @@
         console.log("Running benchmark...");
         fibFunction(number); // warm-up
         const startTime = performance.now();
-        for (const i = 0; i < loop; i++) {
+        for (var i = 0; i < loop; i++) {
           fibFunction(number);
         }
         const endTime = performance.now();
@@ -69,9 +66,20 @@
       }
     </script>
     <style>
+      html,
+      body {
+        width: 100%;
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 1rem;
+        background-color: antiquewhite;
+      }
       button {
         padding: 8px;
         font-size: 16px;
+        margin: 10px;
+      }
+      p {
         margin: 10px;
       }
     </style>
